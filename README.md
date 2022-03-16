@@ -9,17 +9,9 @@ https://secure.snd.payu.com/cp/register?lang=pl
 
 ## Install
 
-### Composer add package
-```json
-{
-	"repositories": [{
-		"type": "vcs",
-		"url": "https://github.com/breakermind/pay"
-	}],
-	"require": {
-		"breakermind/pay": "*"
-	},
-}
+### Composer package
+```sh
+composer require breakermind/pay "~1.0.0"
 ```
 
 ### Install package
@@ -448,12 +440,12 @@ FILESYSTEM_DISK=public
 ### Composer
 ```sh
 # cmd
-composer require breakermind/pay:1.0.0
+composer require breakermind/pay "~1.0.0"
 
 # composer.json
 {
 	"require": {
-		"breakermind/pay": "1.0.*"
+		"breakermind/pay": "~1.0.0"
 	}
 }
 ```
