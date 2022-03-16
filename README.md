@@ -158,6 +158,7 @@ php artisan vendor:publish --provider="Pay\PayServiceProvider.php" --tag=pay-pag
 ```php
 <?php
 use App\Models\Order;
+use Pay\Facades\Pay;
 
 try {
 	// Order uid
@@ -178,6 +179,7 @@ try {
 ```php
 <?php
 use App\Models\Order;
+use Pay\Facades\Pay;
 
 try {
 	// Order uid
@@ -195,6 +197,7 @@ try {
 ```php
 <?php
 use App\Models\Order;
+use Pay\Facades\Pay;
 
 try {
 	// Order uid
@@ -212,6 +215,7 @@ try {
 ```php
 <?php
 use App\Models\Order;
+use Pay\Facades\Pay;
 
 try {
 	// Order uid
@@ -229,6 +233,7 @@ try {
 ```php
 <?php
 use App\Models\Order;
+use Pay\Facades\Pay;
 
 try {
 	// Order uid
@@ -246,6 +251,7 @@ try {
 ```php
 <?php
 use App\Models\Order;
+use Pay\Facades\Pay;
 
 try {
 	// Order uid
@@ -263,6 +269,7 @@ try {
 ```php
 <?php
 use App\Models\Order;
+use Pay\Facades\Pay;
 
 try {
 	// Order uid
@@ -280,6 +287,7 @@ try {
 ```php
 <?php
 use App\Models\Order;
+use Pay\Facades\Pay;
 
 try {
 	// Order uid
