@@ -382,17 +382,6 @@ class UpdatePayTables extends Migration
 php artisan migrate
 ```
 
-### Testing
-```sh
-php artisan --env=testing migrate:fresh --seed
-
-php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
-
-php artisan vendor:publish --tag=pay-tests
-
-php artisan test --testsuite=Pay --stop-on-failure
-```
-
 ### Set in .env, .env.testing
 ```sh
 # default Storage::disk()
@@ -402,19 +391,39 @@ FILESYSTEM_DISK=public
 ### Php artisan
 ```sh
 php artisan key:generate
-
 php artisan route:list
-
 php artisan storage:link
-
 php artisan session:table
-
 php artisan queue:table
-
 php artisan cache:clear
-
 php artisan config:clear
 ```
+
+## Tests
+
+### Settings
+phpunit.xml
+```sh
+<testsuite name="Pay">
+	<directory suffix="Test.php">./tests/Pay</directory>
+</testsuite>
+```
+
+### Migrations
+```sh
+php artisan --env=testing migrate:fresh --seed
+
+php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
+```
+
+### Run tests
+```sh
+php artisan vendor:publish --tag=pay-tests
+
+php artisan test --testsuite=Pay --stop-on-failure
+```
+
+## Composer
 
 ### Local directory
 ```json
@@ -442,7 +451,7 @@ php artisan config:clear
 }
 ```
 
-### Composer
+### Require
 ```sh
 # cmd
 composer require breakermind/pay "~1.0.0"
