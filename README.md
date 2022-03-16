@@ -382,8 +382,27 @@ class UpdatePayTables extends Migration
 php artisan migrate
 ```
 
+### Testing
+```sh
+php artisan --env=testing migrate:fresh --seed
+
+php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
+
+php artisan vendor:publish --tag=pay-tests
+
+php artisan test --testsuite=Pay --stop-on-failure
+```
+
+### Set in .env, .env.testing
+```sh
+# default Storage::disk()
+FILESYSTEM_DISK=public
+```
+
 ### Php artisan
 ```sh
+php artisan key:generate
+
 php artisan route:list
 
 php artisan storage:link
@@ -392,23 +411,9 @@ php artisan session:table
 
 php artisan queue:table
 
-php artisan key:generate
-
 php artisan cache:clear
 
 php artisan config:clear
-
-php artisan migrate
-
-php artisan --env=testing migrate:fresh --seed
-
-php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
-```
-
-### Set in .env, .env.testing
-```sh
-# default Storage::disk()
-FILESYSTEM_DISK=public
 ```
 
 ### Local directory

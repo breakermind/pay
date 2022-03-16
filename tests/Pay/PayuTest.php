@@ -11,10 +11,12 @@ use Database\Seeders\PayDatabaseSeeder;
  * php artisan --env=testing migrate:fresh --seed
  * php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
  *
+ * File: phpunit.xml
  * <testsuite name="Pay">
  *	<directory suffix="Test.php">./tests/Pay</directory>
  * </testsuite>
  *
+ * php artisan vendor:publish --tag=pay-tests
  * php artisan test --testsuite=Pay --stop-on-failure
  */
 class PayuTest extends TestCase
