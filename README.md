@@ -399,6 +399,12 @@ php artisan session:table
 php artisan queue:table
 ```
 
+### Event listeners
+```sh
+php artisan make:listener PaymentCanceledNotification --event=PaymentCanceled
+php artisan make:listener PaymentConfirmedNotification --event=PaymentConfirmed
+```
+
 ## Tests
 
 ### Migration, seed
@@ -418,7 +424,7 @@ php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
 ### Run tests
 ```sh
 # Copy package test/Pay dir
-php artisan vendor:publish --tag=pay-tests
+php artisan vendor:publish --tag=pay-tests --force
 
 # Only for config(['pay.payu.env' => 'sandbox'])
 php artisan test --testsuite=Pay --stop-on-failure

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Order;
 use Pay\PaymentGateway;
 use Pay\Models\Payment;
+use Pay\Events\PaymentCreated;
+use Pay\Events\PaymentCanceled;
+use Pay\Events\PaymentConfirmed;
 use Pay\Http\Payu\OpenPayU_Refunds;
 use OpenPayU_Configuration;
 use OpenPayU_Order;
@@ -118,6 +121,9 @@ class PayuPaymentGateway implements PaymentGateway
 						'url' => $url,
 						'ip' => request()->ip()
 					]);
+
+					// Emit event
+					PaymentCreated::dispatch($order);
 
 					return $url;
 				} else {
@@ -255,6 +261,9 @@ class PayuPaymentGateway implements PaymentGateway
 					$p->status = 'COMPLETED';
 					$p->save();
 
+					// Emit event
+					PaymentConfirmed::dispatch($order);
+
 					return 'COMPLETED';
 				} else {
 					throw new Exception('Status update error.');
@@ -282,6 +291,9 @@ class PayuPaymentGateway implements PaymentGateway
 				if ($res->getStatus() == 'SUCCESS') {
 					$p->status = 'CANCELED';
 					$p->save();
+
+					// Emit event
+					PaymentCanceled::dispatch($order);
 
 					return 'CANCELED';
 				} else {

@@ -3,9 +3,11 @@
 namespace Tests\Pay;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use App\Models\Order;
 use Database\Seeders\PayDatabaseSeeder;
+use Pay\Events\PaymentCreated;
 
 /**
  * php artisan --env=testing migrate:fresh --seed
@@ -48,10 +50,18 @@ class PayuTest extends TestCase
 			$o = Order::first();
 			$this->assertNotEmpty($o->uid);
 
+			// Event
+			Event::fake();
+
 			// Create payment url
 			$res = $this->get('/web/payment/url/payu/'.$o->uid);
 			$res->assertStatus(200);
 			$this->assertNotEmpty($res['url']);
+
+			// Test event
+			Event::assertDispatched(PaymentCreated::class, function ($event) use ($o) {
+				return $event->order->uid === $o->uid;
+			});
 
 			// Test payment url
 			$res = $this->get($res['url']);
