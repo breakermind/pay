@@ -319,7 +319,11 @@ Route::get('/orders', function () {
 - https://github.com/breakermind/pay/blob/main/src/Http/Controllers/PaymentController.php
 
 ## Events
+
+### Dispatched
 ```php
+<?php
+
 // After payment url has been created
 use Pay\Events\PaymentCreated;
 
@@ -331,6 +335,12 @@ use Pay\Events\PaymentConfirmed;
 
 // After payment refund has been created
 use Pay\Events\PaymentRefunded;
+```
+
+### Listeners
+```sh
+php artisan make:listener PaymentCanceledNotification --event=PaymentCanceled
+php artisan make:listener PaymentConfirmedNotification --event=PaymentConfirmed
 ```
 
 # Development
@@ -411,12 +421,6 @@ php artisan key:generate
 php artisan storage:link
 php artisan session:table
 php artisan queue:table
-```
-
-### Event listeners
-```sh
-php artisan make:listener PaymentCanceledNotification --event=PaymentCanceled
-php artisan make:listener PaymentConfirmedNotification --event=PaymentConfirmed
 ```
 
 ## Tests
