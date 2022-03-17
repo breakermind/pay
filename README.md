@@ -314,6 +314,10 @@ Route::get('/orders', function () {
 });
 ```
 
+### Payment methods
+- https://github.com/breakermind/pay/blob/main/src/Pay.php
+- https://github.com/breakermind/pay/blob/main/src/Http/Controllers/PaymentController.php
+
 ### Events
 ```php
 // After payment url has been created
@@ -328,11 +332,6 @@ use Pay\Events\PaymentConfirmed;
 // After payment refund has been created
 use Pay\Events\PaymentRefunded;
 ```
-
-### Payment methods
-- https://github.com/breakermind/pay/blob/main/src/Pay.php
-- https://github.com/breakermind/pay/blob/main/src/Http/Controllers/PaymentController.php
-
 
 # Development
 
