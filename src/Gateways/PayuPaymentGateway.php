@@ -167,7 +167,7 @@ class PayuPaymentGateway implements PaymentGateway
 			$res = OpenPayU_Order::consumeNotification($data);
 
 			// Emit event
-			PaymentInformed::dispatch($res);
+			// PaymentInformed::dispatch($res);
 
 			// Order notify
 			if (!empty($res->getResponse()->order)) {
