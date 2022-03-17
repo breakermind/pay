@@ -14,15 +14,15 @@ class PaymentInformed
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 
-	public $res;
+	public $notify;
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct($res)
+	public function __construct($notify)
 	{
-		$this->$res = $res;
+		$this->notify = $notify;
 	}
 }
