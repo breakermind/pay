@@ -11,6 +11,7 @@ use Pay\Events\PaymentCreated;
 use Pay\Events\PaymentCanceled;
 use Pay\Events\PaymentConfirmed;
 use Pay\Events\PaymentRefunded;
+use Pay\Events\PaymentInformed;
 use Pay\Http\Payu\OpenPayU_Refunds;
 use OpenPayU_Configuration;
 use OpenPayU_Order;
@@ -164,6 +165,9 @@ class PayuPaymentGateway implements PaymentGateway
 			}
 
 			$res = OpenPayU_Order::consumeNotification($data);
+
+			// Emit event
+			PaymentInformed::dispatch($res);
 
 			// Order notify
 			if (!empty($res->getResponse()->order)) {

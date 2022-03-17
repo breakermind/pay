@@ -335,6 +335,9 @@ use Pay\Events\PaymentConfirmed;
 
 // After payment refund has been created
 use Pay\Events\PaymentRefunded;
+
+// After payment notification request
+use Pay\Events\PaymentInformed;
 ```
 
 ### Listeners
