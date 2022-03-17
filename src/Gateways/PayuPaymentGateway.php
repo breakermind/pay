@@ -171,6 +171,7 @@ class PayuPaymentGateway implements PaymentGateway
 
 			// Order notify
 			if (!empty($res->getResponse()->order)) {
+
 				// Ids
 				$notifyOrderId = $res->getResponse()->order->orderId;
 				$notifyOrderStatus = $res->getResponse()->order->status;
