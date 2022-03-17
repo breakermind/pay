@@ -10,6 +10,7 @@ use Pay\Models\Payment;
 use Pay\Events\PaymentCreated;
 use Pay\Events\PaymentCanceled;
 use Pay\Events\PaymentConfirmed;
+use Pay\Events\PaymentRefunded;
 use Pay\Http\Payu\OpenPayU_Refunds;
 use OpenPayU_Configuration;
 use OpenPayU_Order;
@@ -323,6 +324,9 @@ class PayuPaymentGateway implements PaymentGateway
 					if ($res->getResponse()->refund->status == 'PENDING') {
 						$p->status_refund = 'PENDING';
 						$p->save();
+
+						// Emit event
+						PaymentRefunded::dispatch($order);
 
 						return 'PENDING';
 					}

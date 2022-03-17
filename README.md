@@ -314,6 +314,21 @@ Route::get('/orders', function () {
 });
 ```
 
+### Events
+```php
+// After payment url has been created
+use Pay\Events\PaymentCreated;
+
+// After waiting payment has been canceled
+use Pay\Events\PaymentCanceled;
+
+// After waiting payment has been accepted
+use Pay\Events\PaymentConfirmed;
+
+// After payment refund has been created
+use Pay\Events\PaymentRefunded;
+```
+
 ### Payment methods
 - https://github.com/breakermind/pay/blob/main/src/Pay.php
 - https://github.com/breakermind/pay/blob/main/src/Http/Controllers/PaymentController.php
