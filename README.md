@@ -384,42 +384,43 @@ php artisan migrate
 
 ### Set in .env, .env.testing
 ```sh
-# default Storage::disk()
+# Default Storage::disk()
 FILESYSTEM_DISK=public
 ```
 
 ### Php artisan
 ```sh
-php artisan key:generate
 php artisan route:list
+php artisan cache:clear
+php artisan config:clear
+php artisan key:generate
 php artisan storage:link
 php artisan session:table
 php artisan queue:table
-php artisan cache:clear
-php artisan config:clear
 ```
 
 ## Tests
 
-### Settings
-phpunit.xml
-```sh
-<testsuite name="Pay">
-	<directory suffix="Test.php">./tests/Pay</directory>
-</testsuite>
-```
-
-### Migrations
+### Migration, seed
 ```sh
 php artisan --env=testing migrate:fresh --seed
 
 php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
 ```
 
+### Settings phpunit.xml
+```xml
+<testsuite name="Pay">
+	<directory suffix="Test.php">./tests/Pay</directory>
+</testsuite>
+```
+
 ### Run tests
 ```sh
+# Copy package test/Pay dir
 php artisan vendor:publish --tag=pay-tests
 
+# Only for config(['pay.payu.env' => 'sandbox'])
 php artisan test --testsuite=Pay --stop-on-failure
 ```
 
@@ -464,5 +465,7 @@ composer require breakermind/pay "~1.0.0"
 }
 ```
 
-## Payu api sdk
+## Payment APIs
+
+### Payu api sdk
 https://github.com/PayU-EMEA/openpayu_php
