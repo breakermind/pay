@@ -318,7 +318,7 @@ Route::get('/orders', function () {
 - https://github.com/breakermind/pay/blob/main/src/Pay.php
 - https://github.com/breakermind/pay/blob/main/src/Http/Controllers/PaymentController.php
 
-### Events
+## Events
 ```php
 // After payment url has been created
 use Pay\Events\PaymentCreated;
