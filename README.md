@@ -431,15 +431,15 @@ php artisan queue:table
 ### Database and user
 mysql -u root
 ```sql
-# create database
+# Create database
 CREATE DATABASE IF NOT EXISTS laravel_testing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-# privileges and user with pass
+# Privileges and user with pass
 GRANT ALL PRIVILEGES ON laravel_testing.* TO testing@localhost IDENTIFIED BY 'toor' WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON laravel_testing.* TO testing@127.0.0.1 IDENTIFIED BY 'toor' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
-# change password
+# Change password
 ALTER USER 'testing'@'localhost' IDENTIFIED BY 'toor';
 FLUSH PRIVILEGES;
 ```
