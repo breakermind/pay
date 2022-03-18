@@ -428,10 +428,35 @@ php artisan queue:table
 
 ## Tests
 
+### Database and user
+mysql -u root
+```sql
+# create database
+CREATE DATABASE IF NOT EXISTS laravel_testing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+# privileges and user with pass
+GRANT ALL PRIVILEGES ON laravel_testing.* TO testing@localhost IDENTIFIED BY 'toor' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON laravel_testing.* TO testing@127.0.0.1 IDENTIFIED BY 'toor' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+# change password
+ALTER USER 'testing'@'localhost' IDENTIFIED BY 'toor';
+FLUSH PRIVILEGES;
+```
+
+### Config .env.testing
+```php
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_testing
+DB_USERNAME=testing
+DB_PASSWORD=toor
+```
+
 ### Migration, seed
 ```sh
 php artisan --env=testing migrate:fresh --seed
-
 php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
 ```
 
@@ -440,6 +465,10 @@ php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
 <testsuite name="Pay">
 	<directory suffix="Test.php">./tests/Pay</directory>
 </testsuite>
+
+<!-- optional -->
+<env name="APP_ENV" value="testing" force="true"/>
+<env name="APP_DEBUG" value="true" force="true"/>
 ```
 
 ### Run tests
@@ -447,7 +476,7 @@ php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
 # Copy package test/Pay dir
 php artisan vendor:publish --tag=pay-tests --force
 
-# Only for config(['pay.payu.env' => 'sandbox'])
+# Tests only for config(['pay.payu.env' => 'sandbox'])
 php artisan test --testsuite=Pay --stop-on-failure
 ```
 
