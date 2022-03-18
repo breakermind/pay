@@ -3,6 +3,8 @@ Payment handling for the Laravel application (PayU).
 
 ### Payment gateways
 - PayU - with Official OpenPayU PHP Library - https://payu.com
+- Stripe - (soon)
+- PayPal - (soon)
 
 ### Create Payu sandbox
 https://secure.snd.payu.com/cp/register?lang=pl
