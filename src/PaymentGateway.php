@@ -36,6 +36,9 @@ interface PaymentGateway
 	// Payment refund details
 	function refunds(Order $order);
 
+	// Payment methods
+	function payments($lang);
+
 	// Redirect to url
 	function successUrl(Order $order): string;
 

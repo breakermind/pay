@@ -16,6 +16,7 @@ use Pay\Http\Payu\OpenPayU_Refunds;
 use OpenPayU_Configuration;
 use OpenPayU_Order;
 use OpenPayU_Refund;
+use OpenPayU_Retrieve;
 use OauthCacheFile;
 use OpenPayU_Util;
 
@@ -447,6 +448,18 @@ class PayuPaymentGateway implements PaymentGateway
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_TRANSACTION_ERR ' . $e->getMessage());
+		}
+
+		return 'ERROR';
+	}
+
+	function payments($lang = 'pl')
+	{
+		try {
+			$res = OpenPayU_Retrieve::payMethods($lang);
+			return $res->getResponse();
+		} catch (Exception $e) {
+			Log::error('PAYU_PAYMENTS_ERR ' . $e->getMessage());
 		}
 
 		return 'ERROR';

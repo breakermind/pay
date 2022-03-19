@@ -31,6 +31,9 @@ Route::prefix('/web')->name('web.')->middleware(['web', 'pay'])->group(function 
 
 		Route::get('/payment/refunds/{gateway}/{order}', [PaymentController::class, 'refunds'])
 			->name('pay.refunds');
+
+		Route::get('/payment/payments/{gateway}/{lang}', [PaymentController::class, 'payments'])
+			->name('pay.payments');
 	}
 
 	Route::get('/payment/success/{order}', [PaymentPageController::class, 'success'])

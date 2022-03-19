@@ -55,6 +55,11 @@ class Pay
 		return $this->gatewayRegistry->get($gateway)->refunds($order);
 	}
 
+	function payments($gateway, $lang = 'pl')
+	{
+		return $this->gatewayRegistry->get($gateway)->payments($lang);
+	}
+
 	function notify($gateway)
 	{
 		return $this->gatewayRegistry->get($gateway)->notify();

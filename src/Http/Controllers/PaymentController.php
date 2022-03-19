@@ -72,4 +72,11 @@ class PaymentController extends Controller
 			'message' => $this->gatewayRegistry->get($gateway)->refunds($order)
 		]);
 	}
+
+	function payments($gateway, $lang)
+	{
+		return response()->json([
+			'message' => $this->gatewayRegistry->get($gateway)->payments($lang)
+		]);
+	}
 }
