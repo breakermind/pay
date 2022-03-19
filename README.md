@@ -293,6 +293,20 @@ try {
 }
 ```
 
+### Payment methods
+```php
+<?php
+use Pay\Facades\Pay;
+
+try {
+	// Payment methods
+	$pay_methods = Pay::payments('payu', 'pl');
+
+} catch (\Exception $e) {
+	return $e->getMessage();
+}
+```
+
 ### Orders list (dev)
 ```php
 <?php
