@@ -145,6 +145,7 @@ php artisan vendor:publish --provider="Pay\PayServiceProvider.php" --tag=pay-pag
 ```
 
 # Usage
+If you want to accept each payment individually in PayU (waiting payment), you must turn off reciving payment automatically in the PayU shop panel for specific payments methods.
 
 ### Create payment url
 ```php
