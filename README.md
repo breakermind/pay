@@ -168,7 +168,7 @@ try {
 }
 ```
 
-### Accept (waiting) payment
+### Accept payment (waiting_for_confirmation)
 ```php
 <?php
 use App\Models\Order;
@@ -186,7 +186,7 @@ try {
 }
 ```
 
-### Cancel (waiting) payment
+### Cancel payment (waiting_for_confirmation)
 ```php
 <?php
 use App\Models\Order;
