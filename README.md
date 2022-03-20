@@ -145,7 +145,7 @@ php artisan vendor:publish --provider="Pay\PayServiceProvider.php" --tag=pay-pag
 ```
 
 # Usage
-If you want to accept/cancel each payment individually in PayU (waiting_for_confirmation payment), you must turn off reciving payment automatically in the PayU shop panel for specific payments methods.
+If you want to accept/cancel each payment individually in PayU (waiting_for_confirmation payment status), you must turn off reciving payment automatically in the PayU shop admin panel for specific payments methods.
 
 ### Create payment url
 ```php
