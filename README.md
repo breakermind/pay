@@ -11,7 +11,7 @@ https://secure.snd.payu.com/cp/register?lang=pl
 
 ### Composer package
 ```sh
-composer require breakermind/pay 2.0.*
+composer require breakermind/pay 1.0.*
 ```
 
 ### Install package
