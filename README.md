@@ -486,6 +486,12 @@ php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
 <env name="APP_DEBUG" value="true" force="true"/>
 ```
 
+### Dirs
+```sh
+sudo chown -R user:www-data storage/framework/pay
+sudo chmod -R 775 storage/framework/pay
+```
+
 ### Run tests
 ```sh
 # Copy package test/Pay dir
