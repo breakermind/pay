@@ -42,7 +42,7 @@ class PayuPaymentGateway implements PaymentGateway
 
 		// Create dir
 		if (!is_dir(storage_path() . '/framework/pay/payu')) {
-			@mkdir(storage_path() . '/framework/pay/payu', 2770);
+			@mkdir(storage_path() . '/framework/pay/payu', 0775);
 		}
 
 		// Config
