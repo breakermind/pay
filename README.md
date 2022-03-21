@@ -268,7 +268,7 @@ try {
 	// Order uid
 	$order_uid = 'uid-order-id-here';
 
-	// Refresh payment
+	// Refund payment
 	$status = Pay::refund('payu', Order::findOrFail($order_uid));
 
 } catch (\Exception $e) {
@@ -276,7 +276,7 @@ try {
 }
 ```
 
-### Refund payment details
+### Refunds payment details
 ```php
 <?php
 use App\Models\Order;
@@ -286,7 +286,7 @@ try {
 	// Order uid
 	$order_uid = 'uid-order-id-here';
 
-	// Refresh payment
+	// Refunds payment details
 	$status = Pay::refunds('payu', Order::findOrFail($order_uid));
 
 } catch (\Exception $e) {
@@ -308,7 +308,7 @@ try {
 }
 ```
 
-### Orders list (dev)
+### Orders list (dev only)
 ```php
 <?php
 
