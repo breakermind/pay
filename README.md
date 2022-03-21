@@ -488,7 +488,7 @@ php artisan --env=testing db:seed --class="\Database\Seeders\PayDatabaseSeeder"
 
 ### Dirs
 ```sh
-sudo chown -R user:www-data storage/framework/pay
+sudo chown -R www-data:www-data storage/framework/pay
 sudo chmod -R 770 storage/framework/pay
 ```
 
