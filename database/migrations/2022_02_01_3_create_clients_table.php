@@ -15,7 +15,7 @@ class CreateClientsTable extends Migration
 	{
 		Schema::create('clients', function (Blueprint $table) {
 			$table->id();
-			$table->uuid('order_uid')->unique()->nullable(true);
+			$table->unsignedBigInteger('order_id')->unique()->nullable(true);
 			$table->string('name');
 			$table->string('lastname')->nullable(true);
 			$table->string('country')->nullable(true);
@@ -29,7 +29,7 @@ class CreateClientsTable extends Migration
 			$table->timestamps();
 			$table->softDeletes();
 
-			$table->foreign('order_uid')->references('uid')->on('orders')->onDelete('cascade')->onUpdate('cascade');
+			$table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
 		});
 	}
 

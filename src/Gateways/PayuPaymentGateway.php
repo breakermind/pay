@@ -41,8 +41,8 @@ class PayuPaymentGateway implements PaymentGateway
 		$this->currency = config('pay.payu.currency') ?? 'PLN';
 
 		// Create dir
-		if (!is_dir(storage_path() . '/framework/pay')) {
-			@mkdir(storage_path() . '/framework/pay', 2770);
+		if (!is_dir(storage_path() . '/framework/pay/payu')) {
+			@mkdir(storage_path() . '/framework/pay/payu', 2770);
 		}
 
 		// Config
@@ -53,7 +53,7 @@ class PayuPaymentGateway implements PaymentGateway
 	{
 		try {
 			// Cache
-			OpenPayU_Configuration::setOauthTokenCache(new OauthCacheFile(storage_path() . '/framework/pay'));
+			OpenPayU_Configuration::setOauthTokenCache(new OauthCacheFile(storage_path() . '/framework/pay/payu'));
 
 			// Production Environment
 			OpenPayU_Configuration::setEnvironment($this->env);
@@ -71,7 +71,7 @@ class PayuPaymentGateway implements PaymentGateway
 			}
 		} catch (Exception $e) {
 			report($e);
-			throw new Exception('Payment api config error.', 422);
+			throw new Exception('Payment api config error', 422);
 		}
 	}
 
@@ -80,6 +80,12 @@ class PayuPaymentGateway implements PaymentGateway
 		$url = '';
 
 		try {
+			// Get payment url if exists in database
+			$p = Payment::where(['order_uid' => $order->uid])->first();
+			if (!empty($p->url)) {
+				return $p->url;
+			}
+
 			// Client address
 			$client = $order->client;
 			$total = $this->toCents($order->cost);
@@ -130,22 +136,15 @@ class PayuPaymentGateway implements PaymentGateway
 
 					return $url;
 				} else {
-					throw new Exception('Payu api invalid details: ' . $res->getResponse());
+					throw new Exception('Response: ' . $res->getResponse());
 				}
 			} else {
-				throw new Exception('Payu api invalid status: ' . $res->getStatus());
+				throw new Exception('Status: ' . $res->getStatus());
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_PAY_ERR ' . $e->getMessage());
 
-			// Get payment url if exists in database
-			$p = Payment::where(['order_uid' => $order->uid])->first();
-			if (!empty($p->url)) {
-				return $p->url;
-			}
-
-			// Or show error
-			throw new Exception('Payment api error.', 422);
+			throw new Exception('Payment api error', 422);
 		}
 	}
 
@@ -172,7 +171,6 @@ class PayuPaymentGateway implements PaymentGateway
 
 			// Order notify
 			if (!empty($res->getResponse()->order)) {
-
 				// Ids
 				$notifyOrderId = $res->getResponse()->order->orderId;
 				$notifyOrderStatus = $res->getResponse()->order->status;
@@ -273,10 +271,10 @@ class PayuPaymentGateway implements PaymentGateway
 
 					return 'COMPLETED';
 				} else {
-					throw new Exception('Status update error.');
+					throw new Exception('Status update error');
 				}
 			} else {
-				throw new Exception('Invalid payment id.');
+				throw new Exception('Invalid payment id');
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_CONFIRM_ERR ' . $e->getMessage());
@@ -304,10 +302,10 @@ class PayuPaymentGateway implements PaymentGateway
 
 					return 'CANCELED';
 				} else {
-					throw new Exception('Status update error.');
+					throw new Exception('Status update error');
 				}
 			} else {
-				throw new Exception('Invalid payment id.');
+				throw new Exception('Invalid payment id');
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_CANCEL_ERR ' . $e->getMessage());
@@ -324,7 +322,7 @@ class PayuPaymentGateway implements PaymentGateway
 			])->first();
 
 			if ($p) {
-				$res = OpenPayU_Refund::create($p->id, __('Refunded'), null);
+				$res = OpenPayU_Refund::create($p->id, __('Refunding'), null);
 
 				if ($res->getStatus() == 'SUCCESS') {
 					if ($res->getResponse()->refund->status == 'PENDING') {
@@ -337,10 +335,10 @@ class PayuPaymentGateway implements PaymentGateway
 						return 'PENDING';
 					}
 				} else {
-					throw new Exception('Order has not been refunded.');
+					throw new Exception('Order has not been refunded');
 				}
 			} else {
-				throw new Exception('Invalid payment id.');
+				throw new Exception('Invalid payment id');
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_REFUND_ERR ' . $e->getMessage());
@@ -361,7 +359,7 @@ class PayuPaymentGateway implements PaymentGateway
 
 				return $res->getResponse();
 			} else {
-				throw new Exception('Invalid payment id.');
+				throw new Exception('Invalid payment id');
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_REFUNDS_ERR ' . $e->getMessage());
@@ -384,23 +382,22 @@ class PayuPaymentGateway implements PaymentGateway
 					$payu_order = $res->getResponse()->orders[0];
 					if ($payu_order) {
 						if (in_array($payu_order->status, $this->status)) {
-							if (strtoupper($p->status) != 'COMPLETED') {
-								$p->status = strtoupper($payu_order->status);
-								$p->save();
-							}
+							$p->status = strtoupper($payu_order->status);
+							$p->save();
+
 							// Return order status
 							return $p->status;
 						} else {
-							throw new Exception('Invalid order status.');
+							throw new Exception('Invalid order status');
 						}
 					} else {
-						throw new Exception('Order does not exists.');
+						throw new Exception('Order does not exists');
 					}
 				} else {
-					throw new Exception('Invalid status.');
+					throw new Exception('Invalid status');
 				}
 			} else {
-				throw new Exception('Invalid id.');
+				throw new Exception('Invalid id');
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_REFRESH_ERR ' . $e->getMessage());
@@ -423,7 +420,7 @@ class PayuPaymentGateway implements PaymentGateway
 					return $res->getResponse()->orders[0];
 				}
 			} else {
-				throw new Exception('Invalid payment id.');
+				throw new Exception('Invalid payment id');
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_RETRIVE_ERR ' . $e->getMessage());
@@ -444,7 +441,7 @@ class PayuPaymentGateway implements PaymentGateway
 
 				return $res->getResponse()->transactions[0];
 			} else {
-				throw new Exception('Invalid payment id.');
+				throw new Exception('Invalid payment id');
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_TRANSACTION_ERR ' . $e->getMessage());
@@ -457,6 +454,7 @@ class PayuPaymentGateway implements PaymentGateway
 	{
 		try {
 			$res = OpenPayU_Retrieve::payMethods($lang);
+
 			return $res->getResponse();
 		} catch (Exception $e) {
 			Log::error('PAYU_PAYMENTS_ERR ' . $e->getMessage());

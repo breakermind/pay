@@ -15,7 +15,7 @@ class Client extends Model
 	public function order()
 	{
 		// 'foreign_key', 'owner_key'
-		return $this->belongsTo(Order::class, 'order_uid', 'uid');
+		return $this->belongsTo(Order::class, 'order_id', 'id');
 	}
 
 	protected static function newFactory()

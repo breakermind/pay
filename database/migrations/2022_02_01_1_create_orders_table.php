@@ -14,11 +14,11 @@ class CreateOrdersTable extends Migration
 	public function up()
 	{
 		Schema::create('orders', function (Blueprint $table) {
-			$table->uuid('uid')->primary();
+			$table->id();
+			$table->uuid('uid')->unique()->index()->nullable(true);
 			$table->decimal('cost', 15, 2)->default(0.00);
 			$table->enum('payment_method', ['money','card','online'])->nullable()->default('money');
 			$table->string('payment_gateway')->nullable(true);
-			$table->timestamp('hide_at')->nullable(true);
 			$table->timestamps();
 			$table->softDeletes();
 		});
