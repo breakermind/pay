@@ -130,6 +130,13 @@ return [
 ];
 ```
 
+### Cache dir
+```sh
+sudo mkdir -p storage/framework/pay
+sudo chown -R www-data:www-data storage/framework/pay
+sudo chmod -R 770 storage/framework/pay
+```
+
 ### Refresh public icons (optional)
 ```sh
 php artisan vendor:publish --tag=pay-public --force
