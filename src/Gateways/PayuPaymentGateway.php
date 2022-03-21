@@ -80,12 +80,6 @@ class PayuPaymentGateway implements PaymentGateway
 		$url = '';
 
 		try {
-			// Get payment url if exists in database
-			$p = Payment::where(['order_uid' => $order->uid])->first();
-			if (!empty($p->url)) {
-				return $p->url;
-			}
-
 			// Client address
 			$client = $order->client;
 			$total = $this->toCents($order->cost);
@@ -143,6 +137,12 @@ class PayuPaymentGateway implements PaymentGateway
 			}
 		} catch (Exception $e) {
 			Log::error('PAYU_PAY_ERR ' . $e->getMessage());
+
+			// Get payment url if exists in database
+			$p = Payment::where(['order_uid' => $order->uid])->first();
+			if (!empty($p->url)) {
+				return $p->url;
+			}
 
 			throw new Exception('Payment api error', 422);
 		}
@@ -472,7 +472,7 @@ class PayuPaymentGateway implements PaymentGateway
 	function successUrl(Order $order): string
 	{
 		// https://your.page/web/payment/success/{order}
-		return request()->getSchemeAndHttpHost() . '/web/payment/success/' . $order->uid;
+		return request()->getSchemeAndHttpHost() . '/web/payment/success/' . $order->id;
 	}
 
 	function ipAddress(): string

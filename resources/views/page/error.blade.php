@@ -49,7 +49,7 @@
 	<div class="box">
 		<div class="order">
 			<div class="hi">@lang('pay::page.hello')!</div>
-			<div class="alert"> @lang('pay::page.order') ID-{{ $order->uid }}  @lang('pay::page.has_not_been_paid').</div>
+			<div class="alert"> @lang('pay::page.order') ID-{{ $order->id }}  @lang('pay::page.has_not_been_paid').</div>
 			<div class="bye">@lang('pay::page.nice_day').</div>
 		</div>
 	</div>

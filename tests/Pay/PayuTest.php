@@ -54,7 +54,7 @@ class PayuTest extends TestCase
 			Event::fake();
 
 			// Create payment url
-			$res = $this->get('/web/payment/url/payu/'.$o->uid);
+			$res = $this->get('/web/payment/url/payu/'.$o->id);
 			$res->assertStatus(200);
 			$this->assertNotEmpty($res['url']);
 
