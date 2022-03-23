@@ -153,7 +153,9 @@ class PayuPaymentGateway implements PaymentGateway
 		$body = request()->getContent();
 		$data = trim($body);
 
-		Log::error('PAYU_NOTIFY_BODY ' . $data . ' PAYU_NOTIFY_BODY_END');
+		if (config('pay.payu.env') == 'sandbox') {
+			Log::error('PAYU_NOTIFY_BODY ' . $data . ' PAYU_NOTIFY_BODY_END');
+		}
 
 		try {
 			if (!in_array($this->ipAddress(), $this->allowed_ip)) {
