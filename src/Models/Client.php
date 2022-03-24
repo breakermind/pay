@@ -12,6 +12,10 @@ class Client extends Model
 {
 	use HasFactory, SoftDeletes;
 
+	protected $guarded = [];
+
+	protected $dateFormat = 'Y-m-d H:i:s';
+
 	public function order()
 	{
 		// 'foreign_key', 'owner_key'
@@ -21,5 +25,10 @@ class Client extends Model
 	protected static function newFactory()
 	{
 		return ClientFactory::new();
+	}
+
+	protected function serializeDate(\DateTimeInterface $date)
+	{
+		return $date->format($this->dateFormat);
 	}
 }

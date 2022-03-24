@@ -17,6 +17,8 @@ class Order extends Model
 
 	protected $guarded = [];
 
+	protected $dateFormat = 'Y-m-d H:i:s';
+
 	public function client()
 	{
 		return $this->hasOne(Client::class, 'order_id', 'id');
@@ -45,6 +47,6 @@ class Order extends Model
 
 	protected function serializeDate(\DateTimeInterface $date)
 	{
-		return $date->format('Y-m-d H:i:s');
+		return $date->format($this->dateFormat);
 	}
 }
